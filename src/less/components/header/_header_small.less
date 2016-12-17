@@ -1,0 +1,31 @@
+header{
+	margin: 0 0 32px;
+	font-size: 0;
+	background: @primary;
+	box-shadow: 4px 4px 0 darken(@primary, 25%);
+	padding: 16px;
+	text-align: center;
+}
+
+#query-label{
+	&:after{
+		content: ": ";
+	}
+}
+
+#query-label,
+#query{
+	color: @white;
+	font-size: 24px;
+	font-weight: 300;
+	line-height: @defaultLineHeight;
+}
+
+#query{
+	background: transparent;
+	padding: 0;
+	border-bottom: 2px solid @white;
+	width: 100%;
+	max-width: 384px;
+	text-align: center;
+}
