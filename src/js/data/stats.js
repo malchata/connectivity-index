@@ -1,7 +1,7 @@
 const stats = {
 	"max":{
 		"avg":{
-			"country": "Korea",
+			"country": "South Korea",
 			"kbps": 26965
 		},
 		"peak":{

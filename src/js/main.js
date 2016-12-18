@@ -1,4 +1,5 @@
 import { h, render } from "preact";
-import CountryList from "./components/CountryList";
+import FilterableCountryList from "./components/FilterableCountryList";
+import stats from "./data/stats";
 
-render((<CountryList/>), document.getElementById("main"));
+render(<FilterableCountryList stats={stats}/>, document.getElementById("main"));

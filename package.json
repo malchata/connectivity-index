@@ -6,7 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Jeremy Wagner <jeremy.l.wagner@gmail.com> (http://jeremywagner.me/)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/malchata/connectivity-index.git"
+  },
+  "author": "Jeremy Wagner <jeremy.l.wagner@gmail.com> (https://jeremywagner.me/)",
   "license": "MIT",
   "dependencies": {
     "autoprefixer": "^6.5.4",

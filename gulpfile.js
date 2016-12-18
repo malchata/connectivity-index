@@ -116,3 +116,14 @@ exports.clean = clean;
 
 /*** Build Task ***/
 exports.build = gulp.series(clean, gulp.parallel(minifyHTML, buildCSS, buildJS, optimizeImages));
+
+/*** Watch Task (Default) ***/
+const watch = ()=>{
+	livereload.listen();
+	gulp.watch("src/**/*.html", minifyHTML);
+	gulp.watch("src/less/**/*.less", buildCSS);
+	gulp.watch("src/js/**/*.js", buildJS);
+	gulp.watch("src/img/**/*.{jpg,gif,png,svg}", optimizeImages);
+};
+
+exports.default = watch;
