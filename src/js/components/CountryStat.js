@@ -13,7 +13,7 @@ export default class Country extends Component{
 				<div className="metric-bar">
 					<div className="metric-bar-value" style={metricBarValueStyles}/>
 				</div>
-				<span className="metric-value">{this.props.metricValue}</span>
+				<span className="metric-value">{this.props.metricValue} Mbps</span>
 			</div>
 		);
 	}

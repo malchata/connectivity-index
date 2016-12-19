@@ -15,19 +15,9 @@ export default class Search extends Component{
 	render(){
 		return (
 			<header>
-				<label
-					id="query-label"
-					for="query">
-					Search by Country
+				<label id="query-label" for="query">Search by Country
 				</label>
-				<input
-					type="text"
-					placeholder={this.props.placeholderText}
-					value={this.props.searchQuery}
-					ref={(input)=>this.searchQueryInput = input}
-					onKeyUp={this.handleChange}
-					id="query"
-				/>
+				<input type="text" placeholder={this.props.placeholderText} value={this.props.searchQuery} ref={(input)=>this.searchQueryInput = input} onKeyUp={this.handleChange} id="query"/>
 			</header>
 		);
 	}

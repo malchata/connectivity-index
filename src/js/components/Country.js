@@ -37,18 +37,20 @@ export default class Country extends Component{
 		return (
 			<li className="country">
 				<h4>{this.props.countryData.country}</h4>
-				<CountryStat
-					metricName="Avg"
-					metricValue={avg}
-					metricBarValue={avgPercentage * 100}
-					metricBarColor={avgColor}
-				/>
-				<CountryStat
-					metricName="Peak"
-					metricValue={peak}
-					metricBarValue={peakPercentage * 100}
-					metricBarColor={peakColor}
-				/>
+				<div className="stats">
+					<CountryStat
+						metricName="Avg"
+						metricValue={avg}
+						metricBarValue={avgPercentage * 100}
+						metricBarColor={avgColor}
+					/>
+					<CountryStat
+						metricName="Peak"
+						metricValue={peak}
+						metricBarValue={peakPercentage * 100}
+						metricBarColor={peakColor}
+					/>
+				</div>
 			</li>
 		);
 	}

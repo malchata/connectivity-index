@@ -7,7 +7,6 @@ html,
 body,
 div,
 span,
-iframe,
 h1,
 h2,
 h3,
@@ -15,54 +14,19 @@ h4,
 h5,
 h6,
 p,
-pre,
 a,
-abbr,
-address,
-big,
-cite,
-code,
 img,
-q,
-s,
-small,
-strike,
-sub,
-sup,
-tt,
-var,
 b,
 u,
 i,
 ol,
 ul,
 li,
-fieldset,
 form,
 label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-details,
-figure,
-figcaption,
 footer,
 header,
-hgroup,
-menu,
-nav,
-output,
-section,
-summary,
-time{
+section,{
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -71,16 +35,8 @@ time{
 	vertical-align: baseline;
 }
 
-article,
-aside,
-details,
-figcaption,
-figure,
 footer,
 header,
-hgroup,
-menu,
-nav,
 section{
 	display: block;
 }
@@ -109,6 +65,7 @@ table{
 
 input,
 textarea,
+select,
 button{
 	appearance: none;
 	border-radius: 0;
@@ -125,8 +82,15 @@ a{
 	color: @linkColor;
 }
 
-img{
+img,
+select{
 	max-width: 100%;
+}
+
+label{
+	&:after{
+		content: ": ";
+	}
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi){
