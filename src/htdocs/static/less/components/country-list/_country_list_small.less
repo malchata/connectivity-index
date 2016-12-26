@@ -1,0 +1,108 @@
+#filters,
+.country,
+.all-country-list{
+	background: @lightGrey;
+	box-shadow: 4px 4px 0 fade(darken(@lightGrey, 37.5%), 50%);
+}
+
+.country-list{
+	font-size: 0;
+	margin: 0 0 16px;
+}
+
+.all-country-list{
+	padding: 16px;
+	margin: 0 0 16px;
+
+	li{
+		color: @white;
+		font-size: 16px;
+		list-style: disc outside;
+		margin: 0 0 8px 16px;
+	}
+}
+
+.country{
+	margin: 0 0 16px;
+	padding: 16px 16px 8px;
+	vertical-align: top;
+	display: inline-block;
+	width: 100%;
+	position: relative;
+}
+
+.permalink{
+	position: absolute;
+	top: 16px;
+	right: 16px;
+	display: block;
+	width: 18px;
+}
+
+.country-name{
+	margin: 0 0 16px;
+	font-weight: 400;
+}
+
+.stats{
+	padding: 16px 0 0;
+	border-top: 1px dotted @white;
+	align-self: flex-end;
+}
+
+.stat{
+	font-size: 0;
+	margin: 0 0 8px;
+}
+
+.metric-name{
+	color: @white;
+	font-size: 16px;
+	line-height: 1.618;
+	display: block;
+	vertical-align: middle;
+}
+
+.metric-bar{
+	width: 75%;
+	display: inline-block;
+	vertical-align: middle;
+	background: @darkGrey;
+}
+
+.metric-bar-value{
+	height: 24px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.metric-value{
+	color: @white;
+	font-size: 15px;
+	line-height: 1;
+	width: 23%;
+	margin: 0 0 0 2%;
+	vertical-align: middle;
+	display: inline-block;
+	font-family: @monospace;
+}
+
+@media (min-width: 512px){
+	.metric-bar{
+		width: 85%;
+	}
+
+	.metric-value{
+		width: 13%;
+	}
+
+	.all-country-list{
+		display: flex;
+		justify-content: space-between;
+		flex-flow: row wrap;
+
+		li{
+			width: calc(~"49% - 16px");
+		}
+	}
+}

@@ -1,0 +1,29 @@
+header{
+	margin: 0 0 16px;
+	font-size: 0;
+	background: @primary;
+	box-shadow: 4px 4px 0 fade(darken(@primary, 25%), 50%);
+	padding: 16px;
+	text-align: center;
+}
+
+#query-label,
+#query{
+	color: @white;
+	font-size: 32px;
+}
+
+#query{
+	background: transparent;
+	padding: 0;
+	border-bottom: 2px solid @white;
+	width: 100%;
+	max-width: 384px;
+	text-align: center;
+}
+
+@media (min-width: 715px){
+	#query{
+		text-align: left;
+	}
+}

@@ -24,8 +24,8 @@ const del = require("del");
 
 /*** HTML Minification Task ***/
 const minifyHTML = ()=>{
-	let src = "src/**/*.{html,ejs}",
-		dest = "dist";
+	let src = "src/htdocs/**/*.html",
+		dest = "dist/htdocs";
 
 	return gulp.src(src)
 		.pipe(plumber())
@@ -41,8 +41,8 @@ exports.minifyHTML = minifyHTML;
 
 // Compile CSS
 const buildCSS = ()=>{
-	let src = "src/less/styles.less",
-		dest = "dist/css";
+	let src = "src/htdocs/static/less/styles.less",
+		dest = "dist/htdocs/static/css";
 
 	return gulp.src(src)
 		.pipe(plumber())
@@ -61,10 +61,10 @@ const buildCSS = ()=>{
 
 exports.buildCSS = buildCSS;
 
-/*** Build JS Task ***/
+/*** Build JS Tasks ***/
 const buildJS = ()=>{
-	let src = "src/js/main.js",
-		dest = "dist/js";
+	let src = ["src/htdocs/static/js/main.js"],
+		dest = "dist/htdocs/static/js";
 
 	return browserify({
 			entries: src,
@@ -83,12 +83,45 @@ const buildJS = ()=>{
 		.pipe(livereload());
 };
 
+const buildServerComponents = ()=>{
+	let src = ["src/htdocs/static/js/components/stats.js", "src/htdocs/static/js/components/AllCountryList.js", "src/htdocs/static/js/components/Utilities.js"],
+		dest = "dist/htdocs/static/js/components";
+
+	return gulp.src(src)
+		.pipe(plumber())
+		.pipe(babel({
+			presets: ["es2015"],
+			plugins: [["transform-react-jsx", {"pragma": "h"}]]
+		}))
+		.pipe(uglify())
+		.pipe(optimizeJS())
+		.pipe(gulp.dest(dest));
+};
+
+const buildServer = ()=>{
+	let src = "src/server.js",
+		dest = "dist";
+
+	return gulp.src(src)
+		.pipe(plumber())
+		.pipe(babel({
+			presets: ["es2015"],
+			plugins: [["transform-react-jsx", {"pragma": "h"}]]
+		}))
+		.pipe(uglify())
+		.pipe(optimizeJS())
+		.pipe(gulp.dest(dest));
+};
+
+// Export tasks
 exports.buildJS = buildJS;
+exports.buildServerComponents = buildServerComponents;
+exports.buildServer = buildServer;
 
 /*** Image Optimization Task ***/
 const optimizeImages = ()=>{
-	let src = "src/img/**/*.{jpg,gif,png,svg}",
-		dest = "dist/img";
+	let src = "src/htdocs/static/img/**/*.{jpg,gif,png,svg}",
+		dest = "dist/htdocs/static/img";
 
 	return gulp.src(src)
 		.pipe(plumber())
@@ -115,15 +148,15 @@ const clean = ()=>{
 exports.clean = clean;
 
 /*** Build Task ***/
-exports.build = gulp.series(clean, gulp.parallel(minifyHTML, buildCSS, buildJS, optimizeImages));
+exports.build = gulp.series(clean, gulp.parallel(minifyHTML, buildCSS, buildJS, buildServerComponents, buildServer, optimizeImages));
 
 /*** Watch Task (Default) ***/
 const watch = ()=>{
 	livereload.listen();
-	gulp.watch("src/**/*.{html,ejs}", minifyHTML);
-	gulp.watch("src/less/**/*.less", buildCSS);
-	gulp.watch("src/js/**/*.js", buildJS);
-	gulp.watch("src/img/**/*.{jpg,gif,png,svg}", optimizeImages);
+	gulp.watch("src/htdocs/**/*.html", minifyHTML);
+	gulp.watch("src/htdocs/static/less/**/*.less", buildCSS);
+	gulp.watch("src/htdocs/static/js/**/*.js", buildJS);
+	gulp.watch("src/htdocs/static/img/**/*.{jpg,gif,png,svg}", optimizeImages);
 };
 
 exports.default = watch;

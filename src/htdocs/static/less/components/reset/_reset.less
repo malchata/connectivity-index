@@ -1,0 +1,100 @@
+/*	http://meyerweb.com/eric/tools/css/reset/
+	v2.0 | 20110126
+	License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+img,
+b,
+u,
+i,
+ul,
+li,
+form,
+label,
+footer,
+header,
+section{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+footer,
+header,
+section{
+	display: block;
+}
+
+html{
+	font-size: 16px;
+}
+
+body{
+	line-height: 1;
+	font-family: @sansSerif;
+	padding: 4px 16px 16px;
+	background: @grey;
+	font-weight: 300;
+}
+
+ul{
+	list-style: none;
+}
+
+table{
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+input,
+textarea,
+select,
+button{
+	appearance: none;
+	border-radius: 0;
+	border: 0;
+	font-family: @sansSerif;
+	outline: 0;
+}
+
+*{
+	box-sizing: border-box;
+}
+
+a{
+	color: @linkColor;
+}
+
+img,
+select{
+	max-width: 100%;
+}
+
+label{
+	line-height: 1.618;
+
+	&:after{
+		content: ": ";
+	}
+}
+
+label,
+input,
+select{
+	font-weight: 300;
+}

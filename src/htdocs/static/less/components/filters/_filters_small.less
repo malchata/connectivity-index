@@ -1,0 +1,56 @@
+#filters{
+	padding: 8px 16px 8px;
+	margin: 0 0 16px;
+	font-size: 0;
+}
+
+.country-count{
+	margin: 0 0 16px;
+}
+
+select,
+.sort-label{
+	font-size: 24px;
+}
+
+.sort-label{
+	color: @white;
+
+	&:after,
+	&:before{
+		content: " ";
+	}
+}
+
+.select-container{
+	display: inline-block;
+	cursor: pointer;
+	padding: 0 16px 0 0;
+	position: relative;
+	background: @primary;
+	margin: 0 0 8px;
+	border-radius: 4px;
+
+	&:after{
+		content: "";
+		display: block;
+		position: absolute;
+		top: 50%;
+		right: 6px;
+		margin: -12.9375px 0 0;
+		width: 12px;
+		height: 25.875px;
+		background: url("/img/select-arrow.svg") no-repeat;
+	}
+}
+
+select{
+	font-family: @sansSerif;
+	padding: 4px 8px;
+	color: @white;
+	background: transparent;
+}
+
+.filter-container{
+	text-align: center;
+}
