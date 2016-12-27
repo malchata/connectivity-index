@@ -11,7 +11,8 @@
 h1,
 h2,
 h3,
-h4{
+h4,
+#footer-text{
 	color: @white;
 	line-height: 1.618;
 	text-align: center;
@@ -19,6 +20,8 @@ h4{
 
 h1{
 	font-size: 44px;
+	line-height: normal;
+	margin: 0 0 8px;
 }
 
 h2{
@@ -42,7 +45,8 @@ h4{
 
 #main,
 #full-country-list,
-#footer-text{
+#footer-text,
+#go-back{
 	max-width: @maxContainer;
 	margin: 0 auto;
 }
@@ -53,21 +57,17 @@ h4{
 
 #footer-text{
 	font-size: 18px;
-	text-align: center;
-	color: @white;
-	line-height: 1.618;
 }
 
 .divider{
 	font-size: 0;
 	position: relative;
-	margin: 0 auto 24px;
-	opacity: .5;
+	margin: 0 auto 16px;
 	max-width: @maxContainer;
 
 	&:after,
 	&:before{
-		width: calc(~"50% - 51px");
+		width: calc(~"50% - 40px");
 		content: "";
 		min-height: 1px;
 		background: @white;
@@ -77,8 +77,26 @@ h4{
 }
 
 .divider-image{
-	width: 70px;
+	width: 48px;
+	height: 34.8px;
 	display: inline-block;
 	margin: 0 16px;
 	vertical-align: middle;
+	background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iVmVjdG9yIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNzguMzMgMTI5LjMzIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2Y1ZjVmNTt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmRpdmlkZXI8L3RpdGxlPjxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTAsMFYxMjkuMzNIMTc4LjMzVjBaTTE1NS4zMyw5OC4zM0gxMjlWMTEzSDExMy41djEzLjgzSDY0LjgzVjExM0g0OS4zM1Y5OC4zM0gyM1YyMC42N0g0MS42N1YzOS43NWg3LjVWMjAuNjdoNS4xOVYzOS43NWg3LjVWMjAuNjdINjdWMzkuNzVoNy41VjIwLjY3aDUuMTlWMzkuNzVoNy41VjIwLjY3aDUuMTlWMzkuNzVoNy41VjIwLjY3aDUuMTlWMzkuNzVoNy41VjIwLjY3aDUuMTlWMzkuNzVoNy41VjIwLjY3aDUuMTlWMzkuNzVIMTM4VjIwLjY3aDE3LjM2WiIvPjwvc3ZnPg==) no-repeat;
+}
+
+#go-back{
+	background: @primary;
+	box-shadow: 4px 4px 0 fade(darken(@primary, 25%), 50%);
+	margin-bottom: 16px;
+}
+
+.search-countries{
+	font-size: 32px;
+	display: block;
+	padding: 16px;
+	text-align: center;
+	color: @white;
+	text-decoration: none;
+	line-height: 1.618;
 }

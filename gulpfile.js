@@ -84,7 +84,7 @@ const buildJS = ()=>{
 };
 
 const buildServerComponents = ()=>{
-	let src = ["src/htdocs/static/js/components/stats.js", "src/htdocs/static/js/components/AllCountryList.js", "src/htdocs/static/js/components/Utilities.js"],
+	let src = ["src/htdocs/static/js/components/stats.js", "src/htdocs/static/js/components/Utilities.js", "src/htdocs/static/js/components/AllCountryList.js", "src/htdocs/static/js/components/Country.js", "src/htdocs/static/js/components/CountryStat.js"],
 		dest = "dist/htdocs/static/js/components";
 
 	return gulp.src(src)

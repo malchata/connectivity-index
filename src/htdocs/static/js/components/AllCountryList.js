@@ -11,7 +11,7 @@ export default class AllCountryList extends Component{
 			numberOfCountries = this.props.stats.countries.length;
 
 		for(let i = 0; i < numberOfCountries; i++){
-			rows.push(<li><a href={"/country/" + this.props.stats.countries[i].countryCode.toLowerCase()}>{Utilities.toTitleCase(this.props.stats.countries[i].country)}</a></li>);
+			rows.push(<li><a href={"/country/" + this.props.stats.countries[i].cc.toLowerCase()}>{Utilities.toTitleCase(this.props.stats.countries[i].c)}</a></li>);
 		}
 
 		return (

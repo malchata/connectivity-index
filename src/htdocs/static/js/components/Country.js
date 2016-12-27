@@ -27,7 +27,7 @@ export default class Country extends Component{
 		return (
 			<li className="country">
 				<a name={this.props.countryData.countryCode}/>
-				<a href="#" className="permalink" title="Copy Permalink">
+				<a href={"/country/" + this.props.countryData.cc.toLowerCase()} className="permalink" title="Copy Permalink">
 					<img src="/img/link.svg" alt="Copy Permalink"/>
 				</a>
 				<h4 className="country-name">{country}</h4>

@@ -15,7 +15,7 @@ export default class Filters extends Component{
 			<section id="filters">
 				<h3 className="country-count">Showing {this.props.numberOfCountries} {this.props.countriesLabel}</h3>
 				<div className="filter-container">
-					<label for="sort" class="sort-label">Sort by</label>
+					<label for="sort" className="sort-label">Sort by</label>
 					<div className="select-container">
 						<select id="sort" name="sort" ref={(select)=>this.sortMethodInput = select} onChange={this.handleChange}>
 							<option value="c">country name</option>
