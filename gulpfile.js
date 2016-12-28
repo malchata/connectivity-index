@@ -138,7 +138,24 @@ const optimizeImages = ()=>{
 		.pipe(livereload());
 };
 
+const optimizeFavicons = ()=>{
+	let src = "src/htdocs/static/favicons/*.{png,ico}",
+		dest = "dist/htdocs/static";
+
+	return gulp.src(src)
+		.pipe(plumber())
+		.pipe(changed(dest))
+		.pipe(imagemin([
+			pngQuant({
+				quality: "45-90"
+			})
+		]))
+		.pipe(gulp.dest(dest))
+		.pipe(livereload());
+}
+
 exports.optimizeImages = optimizeImages;
+exports.optimizeFavicons = optimizeFavicons;
 
 /*** Clean Task ***/
 const clean = ()=>{
@@ -148,7 +165,7 @@ const clean = ()=>{
 exports.clean = clean;
 
 /*** Build Task ***/
-exports.build = gulp.series(clean, gulp.parallel(minifyHTML, buildCSS, buildJS, buildServerComponents, buildServer, optimizeImages));
+exports.build = gulp.series(clean, gulp.parallel(minifyHTML, buildCSS, buildJS, buildServerComponents, buildServer, optimizeImages, optimizeFavicons));
 
 /*** Watch Task (Default) ***/
 const watch = ()=>{

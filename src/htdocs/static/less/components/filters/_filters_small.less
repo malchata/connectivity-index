@@ -28,6 +28,8 @@ select,
 	padding: 0 16px 0 0;
 	position: relative;
 	background: @primary;
+	background: linear-gradient(to bottom, @primary 0, darken(@primary, 10%) 100%);
+	border: 1px solid darken(@primary, 10%);
 	margin: 0 0 8px;
 	border-radius: 4px;
 
@@ -49,6 +51,7 @@ select{
 	padding: 4px 8px;
 	color: @white;
 	background: transparent;
+	cursor: pointer;
 
 	&::ms-expand{
 		display: none;

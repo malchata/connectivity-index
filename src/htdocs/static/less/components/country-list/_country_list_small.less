@@ -2,7 +2,8 @@
 .country,
 .all-country-list{
 	background: @lightGrey;
-	box-shadow: 4px 4px 0 fade(darken(@lightGrey, 37.5%), 50%);
+	background: linear-gradient(to bottom, @lightGrey 0, darken(@lightGrey, 10%) 100%);
+	box-shadow: 4px 4px 0 darken(@darkGrey, 30%);
 }
 
 .country-list{
@@ -70,6 +71,7 @@
 	display: inline-block;
 	vertical-align: middle;
 	background: @darkGrey;
+	background: linear-gradient(to bottom, @darkGrey 0, darken(@darkGrey, 7.5%) 100%);
 	box-shadow: 4px 4px 0 darken(@darkGrey, 15%) inset;
 }
 
