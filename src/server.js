@@ -5,7 +5,7 @@ import compression from "compression";
 import { h } from "preact";
 import render from "preact-render-to-string";
 import stats from "./htdocs/static/js/components/stats";
-import * as Utilities from "./htdocs/static/js/components/Utilities.js";
+import { toTitleCase } from "./htdocs/static/js/components/Utilities";
 import AllCountryList from "./htdocs/static/js/components/AllCountryList";
 import Country from "./htdocs/static/js/components/Country.js";
 import cheerio from "cheerio";
@@ -14,6 +14,8 @@ const staticDir = path.join(__dirname, "htdocs", "static");
 const app = new express();
 const port = process.env.PORT || 8080;
 const countryCodeRegEx = /[a-z]{2}/i;
+const inProd = process.env.PROD || false;
+const gaScript = "[data-analytics]";
 
 // Static pieces
 app.use(compression());
@@ -29,6 +31,11 @@ app.get("/", (req, res)=>{
 			componentHtml = render(<AllCountryList stats={stats}/>);
 
 		$("#full-country-list").html(componentHtml);
+
+		if(inProd === false){
+			$(gaScript).remove();
+		}
+
 		res.send($.html());
 	});
 });
@@ -62,10 +69,15 @@ app.get("/country/:countryCode", (req, res)=>{
 
 			let $ = cheerio.load(data),
 				componentHtml = render(<ul className="country-list single-country"><Country maxAvg={stats.m.a.k} maxPeak={stats.m.p.k} countryData={countryData}/></ul>),
-				title = Utilities.toTitleCase(countryData.c) + " | Connectivity Index";
+				title = toTitleCase(countryData.c) + " | Connectivity Index";
 
 			$("title").text(title);
-			$("#main").html(componentHtml);
+			$("#single-country-listing").html(componentHtml);
+
+			if(inProd === false){
+				$(gaScript).remove();
+			}
+
 			res.send($.html());
 		});
 	}

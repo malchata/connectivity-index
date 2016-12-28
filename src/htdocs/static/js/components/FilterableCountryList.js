@@ -1,5 +1,5 @@
 import { h, render, Component } from "preact";
-import * as Utilities from "./Utilities";
+import { dataSort } from "./Utilities";
 import Filters from "./Filters";
 import Search from "./Search";
 import Country from "./Country";
@@ -35,15 +35,11 @@ export default class FilterableCountryList extends Component{
 			rows = [];
 
 		if(this.state.searchQuery.length > 0){
-			let rawRows = [];
+			let rawRows = this.props.stats.countries.filter((el)=>{
+					return el.c.toLowerCase().indexOf(this.state.searchQuery.toLowerCase()) !== -1;
+				});
 
-			this.props.stats.countries.forEach((country)=>{
-				if(country.c.toLowerCase().indexOf(this.state.searchQuery.toLowerCase()) !== -1){
-					rawRows.push(country);
-				}
-			});
-
-			rawRows = Utilities.dataSort(rawRows, this.state.sortMethod, this.state.sortOrder);
+			rawRows = dataSort(rawRows, this.state.sortMethod, this.state.sortOrder);
 
 			for(let i = 0; i < rawRows.length; i++){
 				rows.push(<Country maxAvg={this.props.stats.m.a.k} maxPeak={this.props.stats.m.p.k} countryData={rawRows[i]}/>);

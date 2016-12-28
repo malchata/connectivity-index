@@ -26,6 +26,10 @@ export const blend = (pos)=>{
 		return "#" + Math.ceil(r3).toString(16) + Math.ceil(g3).toString(16) + Math.ceil(b3).toString(16);
 }
 
+export const filterByCountry = (rows, countryName)=>{
+
+}
+
 export const dataSort = (rows, keyName, order)=>{
 	return rows.sort((a, b)=>{
 		if(order === "asc"){

@@ -1,11 +1,11 @@
 {
   "name": "connectivity-index",
   "version": "1.0.0",
-  "description": "A visual representation of internet connectivity worldwide",
+  "description": "A searchable index of Akamai's State of the Internet connectivity report data.",
   "main": "http.js",
   "scripts": {
     "build": "gulp build",
-    "start": "node dist/server.js"
+    "start": "PORT=80 PROD='prod' node dist/server.js"
   },
   "repository": {
     "type": "git",
