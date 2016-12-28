@@ -38,7 +38,7 @@
     "gulp-postcss": "^6.2.0",
     "gulp-streamify": "^1.0.2",
     "gulp-uglify": "^2.0.0",
-    "gulp-util": "^3.0.7",
+    "gulp-util": "^3.0.8",
     "imagemin-jpeg-recompress": "^5.1.0",
     "imagemin-pngquant": "^5.0.0",
     "preact": "^7.1.0",
