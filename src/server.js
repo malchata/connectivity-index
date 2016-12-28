@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import mime from "mime";
 import express from "express";
 import compression from "compression";
 import { h } from "preact";
@@ -17,9 +18,29 @@ const countryCodeRegEx = /[a-z]{2}/i;
 const inProd = process.env.PROD || false;
 const gaScript = "[data-analytics]";
 
-// Static pieces
 app.use(compression());
-app.use(express.static(staticDir));
+app.use(express.static(staticDir, {
+	setHeaders: (res, path, stat)=>{
+		switch(mime.lookup(path)){
+			case "text/css":
+			case "text/javascript":
+			case "application/javascript":
+				res.setHeader("Cache-Control", "public,max-age=2592000");
+			break;
+
+			case "image/jpeg":
+			case "image/jpg":
+			case "image/png":
+			case "image/gif":
+			case "image/webp":
+			case "image/svg+xml":
+			case "image/x-icon":
+			case "image/vnd.microsoft.icon":
+				res.setHeader("Cache-Control", "public,max-age=31536000");
+			break;
+		}
+	}
+}));
 
 app.get("/", (req, res)=>{
 	fs.readFile(path.join(__dirname, "htdocs", "index.html"), (err, data)=>{
@@ -36,6 +57,8 @@ app.get("/", (req, res)=>{
 			$(gaScript).remove();
 		}
 
+		res.setHeader("Cache-Control", "private,no-cache,must-revalidate");
+		res.setHeader("Link", "</css/styles.css>;rel=preload;as=style,<https://www.google-analytics.com>;rel=preconnect");
 		res.send($.html());
 	});
 });
@@ -78,6 +101,8 @@ app.get("/country/:countryCode", (req, res)=>{
 				$(gaScript).remove();
 			}
 
+			res.setHeader("Cache-Control", "private,no-cache,must-revalidate");
+			res.setHeader("Link", "</css/styles.css>;rel=preload;as=style,<https://www.google-analytics.com>;rel=preconnect");
 			res.send($.html());
 		});
 	}
