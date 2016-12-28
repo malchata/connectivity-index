@@ -7,7 +7,7 @@ import render from "preact-render-to-string";
 import stats from "./htdocs/static/js/components/stats";
 import { toTitleCase } from "./htdocs/static/js/components/Utilities";
 import AllCountryList from "./htdocs/static/js/components/AllCountryList";
-import Country from "./htdocs/static/js/components/Country.js";
+import Country from "./htdocs/static/js/components/Country";
 import cheerio from "cheerio";
 
 const staticDir = path.join(__dirname, "htdocs", "static");
