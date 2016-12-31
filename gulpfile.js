@@ -172,7 +172,8 @@ const watch = ()=>{
 	livereload.listen();
 	gulp.watch("src/htdocs/**/*.html", minifyHTML);
 	gulp.watch("src/htdocs/static/less/**/*.less", buildCSS);
-	gulp.watch("src/htdocs/static/js/**/*.js", buildJS);
+	gulp.watch("src/htdocs/static/js/**/*.js", buildJS, buildServerComponents);
+	gulp.watch("src/server.js", buildServer);
 	gulp.watch("src/htdocs/static/img/**/*.{jpg,gif,png,svg}", optimizeImages);
 };
 

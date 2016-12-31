@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import crypto from "crypto";
 import mime from "mime";
 import express from "express";
 import compression from "compression";
@@ -13,10 +14,19 @@ import cheerio from "cheerio";
 
 const staticDir = path.join(__dirname, "htdocs", "static");
 const app = new express();
-const port = process.env.PORT || 8080;
+const envSettings = {
+	port: process.env.PORT || 8080,
+	inProd: process.env.PROD || false
+};
+const pageMarkup = {
+	index: fs.readFileSync(path.join(__dirname, "htdocs", "index.html")).toString(),
+	singleCountry: fs.readFileSync(path.join(__dirname, "htdocs", "single-country.html")).toString()
+};
+const contentHashes = {
+	styles: crypto.createHmac("md5", fs.readFileSync(path.join(__dirname, "htdocs", "static", "css", "styles.css").toString())).digest("hex").substr(0, 8),
+	scripts: crypto.createHmac("md5", fs.readFileSync(path.join(__dirname, "htdocs", "static", "js", "scripts.min.js").toString())).digest("hex").substr(0, 8)
+};
 const countryCodeRegEx = /[a-z]{2}/i;
-const inProd = process.env.PROD || false;
-const gaScript = "[data-analytics]";
 
 app.use(compression());
 app.use(express.static(staticDir, {
@@ -43,24 +53,21 @@ app.use(express.static(staticDir, {
 }));
 
 app.get("/", (req, res)=>{
-	fs.readFile(path.join(__dirname, "htdocs", "index.html"), (err, data)=>{
-		if(err){
-			throw err;
-		}
+	let $ = cheerio.load(pageMarkup.index),
+		componentHtml = render(<AllCountryList stats={stats}/>);
 
-		let $ = cheerio.load(data),
-			componentHtml = render(<AllCountryList stats={stats}/>);
+	$("#full-country-list").html(componentHtml);
 
-		$("#full-country-list").html(componentHtml);
+	if(envSettings.inProd === false){
+		$("[data-analytics]").remove();
+	}
 
-		if(inProd === false){
-			$(gaScript).remove();
-		}
+	$("[data-styles]").attr("href", $("[data-styles]").attr("href") + "?v=" + contentHashes.styles);
+	$("[data-scripts]").attr("src", $("[data-scripts]").attr("src") + "?v=" + contentHashes.scripts);
 
-		res.setHeader("Cache-Control", "private,no-cache,must-revalidate");
-		res.setHeader("Link", "</css/styles.css>;rel=preload;as=style,<https://www.google-analytics.com>;rel=preconnect");
-		res.send($.html());
-	});
+	res.setHeader("Cache-Control", "private,no-cache");
+	res.setHeader("Link", "</css/styles.css?v=" + contentHashes.styles + ">;rel=preload;as=style,<https://www.google-analytics.com>;rel=preconnect");
+	res.send($.html());
 });
 
 app.get("/index.html", (req, res)=>{
@@ -72,43 +79,39 @@ app.get("/country/:countryCode", (req, res)=>{
 
 	if(countryCodeRegEx.test(req.params.countryCode) === true && req.params.countryCode.length === 2){
 		clean.countryCode = req.params.countryCode;
+
+		for(let i = 0; i < stats.countries.length; i++){
+			if(stats.countries[i].cc.toLowerCase() === clean.countryCode){
+				var countryData = stats.countries[i];
+				break;
+			}
+		}
+
+		if(typeof(countryData) !== "undefined"){
+			let $ = cheerio.load(pageMarkup.singleCountry),
+				componentHtml = render(<ul className="country-list"><Country maxAvg={stats.m.a.k} maxPeak={stats.m.p.k} countryData={countryData}/></ul>);
+
+			$("title").text(toTitleCase(countryData.c) + " | Connectivity Index");
+			$("#single-country-listing").html(componentHtml);
+
+			if(envSettings.inProd === false){
+				$("[data-analytics]").remove();
+			}
+
+			$("[data-styles]").attr("href", $("[data-styles]").attr("href") + "?v=" + contentHashes.styles);
+			$("[data-scripts]").attr("src", $("[data-scripts]").attr("src") + "?v=" + contentHashes.scripts);
+
+			res.setHeader("Cache-Control", "private,no-cache");
+			res.setHeader("Link", "</css/styles.css?v=" + contentHashes.styles + ">;rel=preload;as=style,<https://www.google-analytics.com>;rel=preconnect");
+			res.send($.html());
+		}
+		else{
+			res.redirect("/");
+		}
 	}
 	else{
 		res.redirect("/");
 	}
-
-	for(let i = 0; i < stats.countries.length; i++){
-		if(stats.countries[i].cc.toLowerCase() === clean.countryCode){
-			var countryData = stats.countries[i];
-			break;
-		}
-	}
-
-	if(typeof(countryData) === "object"){
-		fs.readFile(path.join(__dirname, "htdocs", "single-country.html"), (err, data)=>{
-			if(err){
-				throw err;
-			}
-
-			let $ = cheerio.load(data),
-				componentHtml = render(<ul className="country-list single-country"><Country maxAvg={stats.m.a.k} maxPeak={stats.m.p.k} countryData={countryData}/></ul>),
-				title = toTitleCase(countryData.c) + " | Connectivity Index";
-
-			$("title").text(title);
-			$("#single-country-listing").html(componentHtml);
-
-			if(inProd === false){
-				$(gaScript).remove();
-			}
-
-			res.setHeader("Cache-Control", "private,no-cache,must-revalidate");
-			res.setHeader("Link", "</css/styles.css>;rel=preload;as=style,<https://www.google-analytics.com>;rel=preconnect");
-			res.send($.html());
-		});
-	}
-	else{
-		res.send("whoops");
-	}
 });
 
-app.listen(port);
+app.listen(envSettings.port);

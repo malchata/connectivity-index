@@ -46,25 +46,25 @@ export default class Country extends Component{
 						metricBarColor={peakColor}
 					/>
 					<CountryStat
-						metricName="% of population >4 Mbps"
+						metricName="% of IPv4 addresses >4 Mbps"
 						metricValue={fourMbps + "%"}
 						metricBarValue={fourMbps}
 						metricBarColor={fourMbpsColor}
 					/>
 					<CountryStat
-						metricName="% of population >10 Mbps"
+						metricName="% of IPv4 addresses >10 Mbps"
 						metricValue={tenMbps + "%"}
 						metricBarValue={tenMbps}
 						metricBarColor={tenMbpsColor}
 					/>
 					<CountryStat
-						metricName="% of population >15 Mbps"
+						metricName="% of IPv4 addresses >15 Mbps"
 						metricValue={fifteenMbps + "%"}
 						metricBarValue={fifteenMbps}
 						metricBarColor={fifteenMbpsColor}
 					/>
 					<CountryStat
-						metricName="% of population >25 Mbps"
+						metricName="% of IPv4 addresses >25 Mbps"
 						metricValue={twentyFiveMbps + "%"}
 						metricBarValue={twentyFiveMbps}
 						metricBarColor={twentyFiveMbpsColor}
