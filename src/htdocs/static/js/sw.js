@@ -1,7 +1,7 @@
-const cacheVersion = "v2";
-const cacheWhitelist = ["v2"];
+const cacheVersion = "v3";
+const cacheWhitelist = ["v3"];
 const cssHash = "bacd3d8c";
-const jsHash = "94531c7c";
+const jsHash = "edf2eca4";
 const cachedAssets = [
 	"/css/styles.css?v=" + cssHash,
 	"/js/scripts.min.js?v=" + jsHash

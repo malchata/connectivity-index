@@ -10,8 +10,8 @@ export default class Country extends Component{
 	render(){
 		let avgPercentage = this.props.countryData.a / this.props.maxAvg,
 			peakPercentage = this.props.countryData.p / this.props.maxPeak,
-			avgColor = blend(avgPercentage),
-			peakColor = blend(peakPercentage),
+			avgColor = blend(avgPercentage * 100),
+			peakColor = blend(peakPercentage * 100),
 			fourMbpsColor = blend(this.props.countryData.p4),
 			tenMbpsColor = blend(this.props.countryData.p10),
 			fifteenMbpsColor = blend(this.props.countryData.p15),
