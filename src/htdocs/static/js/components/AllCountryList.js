@@ -1,5 +1,4 @@
 import { h, render, Component } from "preact";
-import { toTitleCase } from "./Utilities";
 
 export default class AllCountryList extends Component{
 	constructor(props){
@@ -11,10 +10,7 @@ export default class AllCountryList extends Component{
 			numberOfCountries = this.props.stats.countries.length;
 
 		for(let i = 0; i < numberOfCountries; i++){
-			let countryName = toTitleCase(this.props.stats.countries[i].c),
-				countryCode = this.props.stats.countries[i].cc.toLowerCase();
-
-			rows.push(<li><a title={countryName} href={"/country/" + countryCode}>{countryName}</a></li>);
+			rows.push(<li><a title={this.props.stats.countries[i].c} href={"/country/" + this.props.stats.countries[i].cc}>{this.props.stats.countries[i].c}</a></li>);
 		}
 
 		return (

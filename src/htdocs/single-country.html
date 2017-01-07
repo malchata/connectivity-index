@@ -44,5 +44,12 @@
 			<p id="footer-text">Created by <a href="https://jeremywagner.me" target="_blank" rel="noopener">Jeremy</a> (<a href="https://twitter.com/malchata">@malchata</a>). <a href="https://www.akamai.com/us/en/our-thinking/state-of-the-internet-report/global-state-of-the-internet-connectivity-reports.jsp" target="_blank" rel="noopener">State of the Internet data</a> courtesy of Akamai.</p>
 		</footer>
 		<script data-analytics>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create', 'UA-89536962-1', 'auto');ga('send', 'pageview');</script>
+		<script data-service-worker-script>
+			if("serviceWorker" in navigator){
+				navigator.serviceWorker.register("/js/sw.js", {
+					scope: "/"
+				})
+			}
+		</script>
 	</body>
 </html>

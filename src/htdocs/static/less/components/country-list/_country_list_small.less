@@ -82,6 +82,14 @@
 	transition: width .5s @jaunty;
 }
 
+.country{
+	&:nth-child(n+10){
+		.metric-bar-value{
+			transition: none;
+		}
+	}
+}
+
 .metric-value{
 	color: @white;
 	font-size: 16px;

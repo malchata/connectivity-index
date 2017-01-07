@@ -1,5 +1,5 @@
 import { h, render, Component } from "preact";
-import { round, blend, toTitleCase } from "./Utilities";
+import { blend } from "./Utilities";
 import CountryStat from "./CountryStat";
 
 export default class Country extends Component{
@@ -8,65 +8,57 @@ export default class Country extends Component{
 	}
 
 	render(){
-		let country = toTitleCase(this.props.countryData.c),
-			countryCode = this.props.countryData.cc.toLowerCase(),
-			avg = round((this.props.countryData.a / 1000), 1),
-			peak = round((this.props.countryData.p / 1000), 1),
-			fourMbps = round(this.props.countryData.p4, 1),
-			tenMbps = round(this.props.countryData.p10, 1),
-			fifteenMbps = round(this.props.countryData.p15, 1),
-			twentyFiveMbps = round(this.props.countryData.p25, 1),
-			avgPercentage = this.props.countryData.a / this.props.maxAvg,
+		let avgPercentage = this.props.countryData.a / this.props.maxAvg,
 			peakPercentage = this.props.countryData.p / this.props.maxPeak,
 			avgColor = blend(avgPercentage),
 			peakColor = blend(peakPercentage),
-			fourMbpsColor = blend(fourMbps / 100),
-			tenMbpsColor = blend(tenMbps / 100),
-			fifteenMbpsColor = blend(fifteenMbps / 100),
-			twentyFiveMbpsColor = blend(twentyFiveMbps / 100);
+			fourMbpsColor = blend(this.props.countryData.p4 / 100),
+			tenMbpsColor = blend(this.props.countryData.p10 / 100),
+			fifteenMbpsColor = blend(this.props.countryData.p15 / 100),
+			twentyFiveMbpsColor = blend(this.props.countryData.p25 / 100);
 
 		return (
 			<li className="country">
-				<a name={countryCode}/>
-				<a href={"/country/" + countryCode} title={country} className="permalink" title="Copy Permalink">
+				<a name={this.props.countryData.cc}/>
+				<a href={"/country/" + this.props.countryData.cc} title={this.props.countryData.c} className="permalink" title="Copy Permalink">
 					<img src="/img/link.svg" alt="Copy Permalink"/>
 				</a>
-				<h4 className="country-name">{country}</h4>
+				<h4 className="country-name">{this.props.countryData.c}</h4>
 				<div className="stats">
 					<CountryStat
 						metricName="Average speed (mbps)"
-						metricValue={avg}
+						metricValue={this.props.countryData.a}
 						metricBarValue={avgPercentage * 100}
 						metricBarColor={avgColor}
 					/>
 					<CountryStat
 						metricName="Peak speed (mbps)"
-						metricValue={peak}
+						metricValue={this.props.countryData.p}
 						metricBarValue={peakPercentage * 100}
 						metricBarColor={peakColor}
 					/>
 					<CountryStat
 						metricName="% of IPv4 addresses >4 Mbps"
-						metricValue={fourMbps + "%"}
-						metricBarValue={fourMbps}
+						metricValue={this.props.countryData.p4 + "%"}
+						metricBarValue={this.props.countryData.p4}
 						metricBarColor={fourMbpsColor}
 					/>
 					<CountryStat
 						metricName="% of IPv4 addresses >10 Mbps"
-						metricValue={tenMbps + "%"}
-						metricBarValue={tenMbps}
+						metricValue={this.props.countryData.p10 + "%"}
+						metricBarValue={this.props.countryData.p10}
 						metricBarColor={tenMbpsColor}
 					/>
 					<CountryStat
 						metricName="% of IPv4 addresses >15 Mbps"
-						metricValue={fifteenMbps + "%"}
-						metricBarValue={fifteenMbps}
+						metricValue={this.props.countryData.p15 + "%"}
+						metricBarValue={this.props.countryData.p15}
 						metricBarColor={fifteenMbpsColor}
 					/>
 					<CountryStat
 						metricName="% of IPv4 addresses >25 Mbps"
-						metricValue={twentyFiveMbps + "%"}
-						metricBarValue={twentyFiveMbps}
+						metricValue={this.props.countryData.p25 + "%"}
+						metricBarValue={this.props.countryData.p25}
 						metricBarColor={twentyFiveMbpsColor}
 					/>
 				</div>

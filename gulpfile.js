@@ -17,6 +17,7 @@ const source = require("vinyl-source-stream");
 const babel = require("gulp-babel");
 const uglify = require("gulp-uglify");
 const optimizeJS = require("gulp-optimize-js");
+const flow = require("gulp-flowtype");
 const imagemin = require("gulp-imagemin");
 const pngQuant = require("imagemin-pngquant");
 const jpegRecompress = require("imagemin-jpeg-recompress");
@@ -72,7 +73,7 @@ const buildJS = ()=>{
 		})
 		.transform(babelify, {
 			presets: ["es2015"],
-			plugins: [["transform-react-jsx", {"pragma": "h"}]]
+			plugins: [["transform-react-jsx", {"pragma": "h"}], ["transform-strict-mode", {"strict": false}]]
 		})
 		.bundle()
 		.pipe(source("scripts.min.js"))
@@ -83,6 +84,22 @@ const buildJS = ()=>{
 		.pipe(livereload());
 };
 
+const buildServiceWorker = ()=>{
+	let src = "src/htdocs/static/js/sw.js",
+		dest = "dist/htdocs/static/js";
+
+	return gulp.src(src)
+		.pipe(plumber())
+		.pipe(babel({
+			presets: ["es2015"],
+			plugins: [["transform-react-jsx", {"pragma": "h"}], ["transform-strict-mode", {"strict": false}]]
+		}))
+		.pipe(uglify())
+		.pipe(optimizeJS())
+		.pipe(gulp.dest(dest))
+		.pipe(livereload());
+}
+
 const buildServerComponents = ()=>{
 	let src = ["src/htdocs/static/js/components/stats.js", "src/htdocs/static/js/components/Utilities.js", "src/htdocs/static/js/components/AllCountryList.js", "src/htdocs/static/js/components/Country.js", "src/htdocs/static/js/components/CountryStat.js"],
 		dest = "dist/htdocs/static/js/components";
@@ -91,7 +108,7 @@ const buildServerComponents = ()=>{
 		.pipe(plumber())
 		.pipe(babel({
 			presets: ["es2015"],
-			plugins: [["transform-react-jsx", {"pragma": "h"}]]
+			plugins: [["transform-react-jsx", {"pragma": "h"}], ["transform-strict-mode", {"strict": false}]]
 		}))
 		.pipe(uglify())
 		.pipe(optimizeJS())
@@ -106,17 +123,26 @@ const buildServer = ()=>{
 		.pipe(plumber())
 		.pipe(babel({
 			presets: ["es2015"],
-			plugins: [["transform-react-jsx", {"pragma": "h"}]]
+			plugins: [["transform-react-jsx", {"pragma": "h"}], ["transform-strict-mode", {"strict": false}]]
 		}))
 		.pipe(uglify())
 		.pipe(optimizeJS())
 		.pipe(gulp.dest(dest));
 };
 
+const typeCheck = ()=>{
+	let src = "src/**/*.js";
+
+	return gulp.src(src)
+		.pipe(flow())
+}
+
 // Export tasks
 exports.buildJS = buildJS;
+exports.buildServiceWorker = buildServiceWorker;
 exports.buildServerComponents = buildServerComponents;
 exports.buildServer = buildServer;
+exports.typeCheck = typeCheck;
 
 /*** Image Optimization Task ***/
 const optimizeImages = ()=>{
@@ -165,14 +191,15 @@ const clean = ()=>{
 exports.clean = clean;
 
 /*** Build Task ***/
-exports.build = gulp.series(clean, gulp.parallel(minifyHTML, buildCSS, buildJS, buildServerComponents, buildServer, optimizeImages, optimizeFavicons));
+exports.build = gulp.series(clean, gulp.parallel(minifyHTML, buildCSS, buildJS, buildServiceWorker, buildServerComponents, buildServer, optimizeImages, optimizeFavicons));
 
 /*** Watch Task (Default) ***/
 const watch = ()=>{
 	livereload.listen();
 	gulp.watch("src/htdocs/**/*.html", minifyHTML);
 	gulp.watch("src/htdocs/static/less/**/*.less", buildCSS);
-	gulp.watch("src/htdocs/static/js/**/*.js", buildJS, buildServerComponents);
+	gulp.watch(["src/htdocs/static/js/**/*.js", "!src/htdocs/static/js/sw.js"], buildJS, buildServerComponents);
+	gulp.watch("src/htdocs/static/js/sw.js", buildServiceWorker);
 	gulp.watch("src/server.js", buildServer);
 	gulp.watch("src/htdocs/static/img/**/*.{jpg,gif,png,svg}", optimizeImages);
 };

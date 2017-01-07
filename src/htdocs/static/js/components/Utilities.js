@@ -1,16 +1,3 @@
-// Found at: http://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
-export const toTitleCase = (str)=>{
-	str = str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-	str = str.replace(" Of", " of");
-	str = str.replace(" And", " and");
-	return str;
-}
-
-export const round = (value, precision)=>{
-	let multiplier = Math.pow(10, precision || 0);
-	return Math.round(value * multiplier) / multiplier;
-}
-
 export const blend = (pos)=>{
 	let r1 = 0x69d05c >> 16,
 		g1 = (0x69d05c >> 8) & 0xff,
@@ -24,10 +11,6 @@ export const blend = (pos)=>{
 		b3 = pos * b1 + (1 - pos) * b2;
 
 		return "#" + Math.ceil(r3).toString(16) + Math.ceil(g3).toString(16) + Math.ceil(b3).toString(16);
-}
-
-export const filterByCountry = (rows, countryName)=>{
-
 }
 
 export const dataSort = (rows, keyName, order)=>{

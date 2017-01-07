@@ -35,7 +35,15 @@ app.use(express.static(staticDir, {
 			case "text/css":
 			case "text/javascript":
 			case "application/javascript":
-				res.setHeader("Cache-Control", "public,max-age=2592000");
+				res.removeHeader('X-Powered-By');
+				res.setHeader("Service-Worker-Allowed", "/");
+
+				if(path.indexOf("js/sw.js") !== -1){
+					res.setHeader("Cache-Control", "private,no-cache,must-revalidate");
+				}
+				else{
+					res.setHeader("Cache-Control", "public,max-age=2592000");
+				}
 			break;
 
 			case "image/jpeg":
@@ -46,6 +54,8 @@ app.use(express.static(staticDir, {
 			case "image/svg+xml":
 			case "image/x-icon":
 			case "image/vnd.microsoft.icon":
+				res.removeHeader('X-Powered-By');
+				res.setHeader("Service-Worker-Allowed", "/");
 				res.setHeader("Cache-Control", "public,max-age=31536000");
 			break;
 		}
@@ -59,13 +69,14 @@ app.get("/", (req, res)=>{
 	$("#full-country-list").html(componentHtml);
 
 	if(envSettings.inProd === false){
-		$("[data-analytics]").remove();
+		$("[data-analytics], [data-service-worker-script]").remove();
 	}
 
 	$("[data-styles]").attr("href", $("[data-styles]").attr("href") + "?v=" + contentHashes.styles);
 	$("[data-scripts]").attr("src", $("[data-scripts]").attr("src") + "?v=" + contentHashes.scripts);
 
 	res.setHeader("Cache-Control", "private,no-cache");
+	res.setHeader("Service-Worker-Allowed", "/");
 	res.setHeader("Link", "</css/styles.css?v=" + contentHashes.styles + ">;rel=preload;as=style,<https://www.google-analytics.com>;rel=preconnect");
 	res.send($.html());
 });
@@ -95,13 +106,14 @@ app.get("/country/:countryCode", (req, res)=>{
 			$("#single-country-listing").html(componentHtml);
 
 			if(envSettings.inProd === false){
-				$("[data-analytics]").remove();
+				$("[data-analytics], [data-service-worker-script]").remove();
 			}
 
 			$("[data-styles]").attr("href", $("[data-styles]").attr("href") + "?v=" + contentHashes.styles);
 			$("[data-scripts]").attr("src", $("[data-scripts]").attr("src") + "?v=" + contentHashes.scripts);
 
 			res.setHeader("Cache-Control", "private,no-cache");
+			res.setHeader("Service-Worker-Allowed", "/");
 			res.setHeader("Link", "</css/styles.css?v=" + contentHashes.styles + ">;rel=preload;as=style,<https://www.google-analytics.com>;rel=preconnect");
 			res.send($.html());
 		}
