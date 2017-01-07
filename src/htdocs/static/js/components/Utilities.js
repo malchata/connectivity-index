@@ -4,11 +4,12 @@ export const blend = (pos)=>{
 		b1  = 0x69d05c & 0xff,
 		r2 = 0xb0413e >> 16,
 		g2 = (0xb0413e >> 8) & 0xff,
-		b2  = 0xb0413e & 0xff;
+		b2  = 0xb0413e & 0xff,
+		percentile = pos / 100;
 
-	let r3 = pos * r1 + (1 - pos) * r2,
-		g3 = pos * g1 + (1 - pos) * g2,
-		b3 = pos * b1 + (1 - pos) * b2;
+	let r3 = percentile * r1 + (1 - percentile) * r2,
+		g3 = percentile * g1 + (1 - percentile) * g2,
+		b3 = percentile * b1 + (1 - percentile) * b2;
 
 		return "#" + Math.ceil(r3).toString(16) + Math.ceil(g3).toString(16) + Math.ceil(b3).toString(16);
 }

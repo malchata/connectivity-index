@@ -7,7 +7,6 @@ import compression from "compression";
 import { h } from "preact";
 import render from "preact-render-to-string";
 import stats from "./htdocs/static/js/components/stats";
-import { toTitleCase } from "./htdocs/static/js/components/Utilities";
 import AllCountryList from "./htdocs/static/js/components/AllCountryList";
 import Country from "./htdocs/static/js/components/Country";
 import cheerio from "cheerio";
@@ -102,7 +101,7 @@ app.get("/country/:countryCode", (req, res)=>{
 			let $ = cheerio.load(pageMarkup.singleCountry),
 				componentHtml = render(<ul className="country-list"><Country maxAvg={stats.m.a.k} maxPeak={stats.m.p.k} countryData={countryData}/></ul>);
 
-			$("title").text(toTitleCase(countryData.c) + " | Connectivity Index");
+			$("title").text(countryData.c + " | Connectivity Index");
 			$("#single-country-listing").html(componentHtml);
 
 			if(envSettings.inProd === false){

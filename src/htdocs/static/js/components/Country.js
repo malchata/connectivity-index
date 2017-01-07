@@ -12,17 +12,15 @@ export default class Country extends Component{
 			peakPercentage = this.props.countryData.p / this.props.maxPeak,
 			avgColor = blend(avgPercentage),
 			peakColor = blend(peakPercentage),
-			fourMbpsColor = blend(this.props.countryData.p4 / 100),
-			tenMbpsColor = blend(this.props.countryData.p10 / 100),
-			fifteenMbpsColor = blend(this.props.countryData.p15 / 100),
-			twentyFiveMbpsColor = blend(this.props.countryData.p25 / 100);
+			fourMbpsColor = blend(this.props.countryData.p4),
+			tenMbpsColor = blend(this.props.countryData.p10),
+			fifteenMbpsColor = blend(this.props.countryData.p15),
+			twentyFiveMbpsColor = blend(this.props.countryData.p25);
 
 		return (
 			<li className="country">
 				<a name={this.props.countryData.cc}/>
-				<a href={"/country/" + this.props.countryData.cc} title={this.props.countryData.c} className="permalink" title="Copy Permalink">
-					<img src="/img/link.svg" alt="Copy Permalink"/>
-				</a>
+				<a href={"/country/" + this.props.countryData.cc} title={this.props.countryData.c} className="permalink" title="Copy permalink">Copy permalink</a>
 				<h4 className="country-name">{this.props.countryData.c}</h4>
 				<div className="stats">
 					<CountryStat
