@@ -46,6 +46,8 @@
 .country-name{
 	margin: 0 0 16px;
 	font-weight: 400;
+	text-align: left;
+	width: 75%;
 }
 
 .stats{
@@ -87,13 +89,14 @@
 	background: @darkGrey;
 	background: linear-gradient(to bottom, @darkGrey 0, darken(@darkGrey, 7.5%) 100%);
 	box-shadow: 4px 4px 0 darken(@darkGrey, 15%) inset;
+	overflow-x: hidden;
 }
 
 .metric-bar-value{
 	height: 24px;
 	display: inline-block;
 	vertical-align: middle;
-	transition: width .5s @jaunty;
+	transition: width 666ms @jaunty;
 }
 
 .country{

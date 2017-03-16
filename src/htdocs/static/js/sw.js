@@ -1,8 +1,9 @@
-const cacheVersion = "v3";
-const cacheWhitelist = ["v3"];
-const cssHash = "bacd3d8c";
-const jsHash = "edf2eca4";
+const cacheVersion = "v7";
+const cacheWhitelist = ["v7"];
+const cssHash = "f4dc9956";
+const jsHash = "e2634713";
 const cachedAssets = [
+	"/",
 	"/css/styles.css?v=" + cssHash,
 	"/js/scripts.min.js?v=" + jsHash
 ];
@@ -18,7 +19,7 @@ self.addEventListener("install", (event)=>{
 self.addEventListener("fetch", (event)=>{
 	let allowedAssets = /(localhost|cindex\.co)/i,
 		deniedAssets = /(google-analytics\.com)/i,
-		networkPreferredAssets = /(sw\.js|\/$)/i;
+		networkPreferredAssets = /(sw\.js)$/i;
 
 	if(allowedAssets.test(event.request.url) === true && deniedAssets.test(event.request.url) === false){
 		if(networkPreferredAssets.test(event.request.url) === true){

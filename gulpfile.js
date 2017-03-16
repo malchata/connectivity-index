@@ -183,6 +183,17 @@ const optimizeFavicons = ()=>{
 exports.optimizeImages = optimizeImages;
 exports.optimizeFavicons = optimizeFavicons;
 
+/*** Copy Manifest Task ***/
+const copyFiles = ()=>{
+	let src = "src/htdocs/static/manifest.webmanifest",
+		dest = "dist/htdocs/static";
+
+	return gulp.src(src)
+		.pipe(gulp.dest(dest));
+}
+
+exports.copyFiles = copyFiles;
+
 /*** Clean Task ***/
 const clean = ()=>{
 	return del("dist");
@@ -191,7 +202,7 @@ const clean = ()=>{
 exports.clean = clean;
 
 /*** Build Task ***/
-exports.build = gulp.series(clean, gulp.parallel(minifyHTML, buildCSS, buildJS, buildServiceWorker, buildServerComponents, buildServer, optimizeImages, optimizeFavicons));
+exports.build = gulp.series(clean, gulp.parallel(minifyHTML, buildCSS, buildJS, buildServiceWorker, buildServerComponents, buildServer, optimizeImages, optimizeFavicons, copyFiles));
 
 /*** Watch Task (Default) ***/
 const watch = ()=>{
@@ -202,6 +213,7 @@ const watch = ()=>{
 	gulp.watch("src/htdocs/static/js/sw.js", buildServiceWorker);
 	gulp.watch("src/server.js", buildServer);
 	gulp.watch("src/htdocs/static/img/**/*.{jpg,gif,png,svg}", optimizeImages);
+	gulp.watch("src/htdocs/static/manifest.webmanifest", copyFiles);
 };
 
 exports.default = watch;

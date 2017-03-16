@@ -32,12 +32,18 @@ export default class FilterableCountryList extends Component{
 
 	render(){
 		let placeholderText = "e.g., Sweden",
-			rows = [];
+			rows = [],
+			rawRows = [];
 
 		if(this.state.searchQuery.length > 0){
-			let rawRows = this.props.stats.countries.filter((el)=>{
-					return el.c.toLowerCase().indexOf(this.state.searchQuery.toLowerCase()) !== -1;
-				});
+			if(this.state.searchQuery === "*"){
+				rawRows = this.props.stats.countries;
+			}
+			else{
+				rawRows = this.props.stats.countries.filter((el)=>{
+						return el.c.toLowerCase().indexOf(this.state.searchQuery.toLowerCase()) !== -1;
+					});
+			}
 
 			rawRows = dataSort(rawRows, this.state.sortMethod, this.state.sortOrder);
 
@@ -45,8 +51,6 @@ export default class FilterableCountryList extends Component{
 				rows.push(<Country maxAvg={this.props.stats.m.a.k} maxPeak={this.props.stats.m.p.k} countryData={rawRows[i]}/>);
 			}
 		}
-
-		let numberOfCountries = rows.length;
 
 		return (
 			<div>
@@ -56,7 +60,7 @@ export default class FilterableCountryList extends Component{
 					searchQuery={this.state.searchQuery}
 				/>
 				<Filters
-					numberOfCountries={numberOfCountries}
+					numberOfCountries={rows.length}
 					countriesLabel={rows.length === 1 ? "country" : "countries"}
 					onUserInput={this.handleSortMethod}
 				/>

@@ -38,7 +38,7 @@ app.use(express.static(staticDir, {
 				res.setHeader("Service-Worker-Allowed", "/");
 
 				if(path.indexOf("js/sw.js") !== -1){
-					res.setHeader("Cache-Control", "private,no-cache,must-revalidate");
+					res.setHeader("Cache-Control", "private,no-cache,no-store,max-age=0");
 				}
 				else{
 					res.setHeader("Cache-Control", "public,max-age=2592000");
@@ -53,7 +53,6 @@ app.use(express.static(staticDir, {
 			case "image/svg+xml":
 			case "image/x-icon":
 			case "image/vnd.microsoft.icon":
-				res.removeHeader('X-Powered-By');
 				res.setHeader("Service-Worker-Allowed", "/");
 				res.setHeader("Cache-Control", "public,max-age=31536000");
 			break;
