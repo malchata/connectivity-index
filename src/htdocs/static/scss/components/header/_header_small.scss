@@ -1,0 +1,68 @@
+header,
+#go-back{
+	background: $primary;
+	background: linear-gradient(to bottom, $primary 0, darken($primary, 10%) 100%);
+	box-shadow: 4px 4px 0 darken($primary, 30%);
+}
+
+header{
+	margin: 0 0 16px;
+	font-size: 0;
+	padding: 16px;
+	text-align: center;
+}
+
+.timeframe{
+	font-size: 14px;
+	font-weight: 700;
+	font: 700 14px/1 $sansSerif;
+	border-radius: 4px;
+	background: linear-gradient(to bottom, $secondary 0, darken($secondary, 10%) 100%);
+	border: 1px solid darken($secondary, 10%);
+	display: inline-block;
+	padding: 4px;
+	vertical-align: 40%;
+	color: $white;
+	text-decoration: none;
+}
+
+#go-back{
+	margin: 0 0 16px;
+}
+
+#query-label,
+#query{
+	color: $white;
+	font-size: 32px;
+}
+
+#query{
+	background: transparent;
+	padding: 0;
+	border-bottom: 2px solid $white;
+	width: 100%;
+	max-width: 384px;
+	text-align: center;
+
+	&::-webkit-input-placeholder{
+		color: fade-out($white, .25);
+	}
+
+	&::-moz-placeholder{
+		color: fade-out($white, .25);
+	}
+
+	&:ms-input-placeholder{
+		color: fade-out($white, .25);
+	}
+
+	&:-moz-placeholder{
+		color: fade-out($white, .25);
+	}
+}
+
+@media (min-width: 715px){
+	#query{
+		text-align: left;
+	}
+}

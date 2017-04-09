@@ -6,7 +6,7 @@ const plumber = require("gulp-plumber");
 const livereload = require("gulp-livereload");
 const streamify = require("gulp-streamify");
 const htmlmin = require("gulp-htmlmin");
-const less = require("gulp-less");
+const sass = require("gulp-sass");
 const postcss = require("gulp-postcss");
 const autoprefixer = require("autoprefixer");
 const autorem = require("autorem");
@@ -19,9 +19,30 @@ const uglify = require("gulp-uglify");
 const optimizeJS = require("gulp-optimize-js");
 const flow = require("gulp-flowtype");
 const imagemin = require("gulp-imagemin");
-const pngQuant = require("imagemin-pngquant");
 const jpegRecompress = require("imagemin-jpeg-recompress");
 const del = require("del");
+
+/*** Module Options ***/
+const moduleOpts = {
+	htmlmin: {
+		collapseWhitespace: true,
+		removeComments: true
+	},
+	autoprefixer: {
+		browsers: ["last 2 versions", "> 5%", "ie >= 10", "iOS >= 8"]
+	},
+	babel: {
+		presets: ["es2015"],
+		plugins: [["transform-react-jsx", {"pragma": "h"}], ["transform-strict-mode", {"strict": false}]]
+	},
+	jpegRecompress: {
+		min: 30,
+		max: 70,
+		method: "smallfry",
+		accurate: true,
+		strip: true
+	}
+}
 
 /*** HTML Minification Task ***/
 const minifyHTML = ()=>{
@@ -30,10 +51,7 @@ const minifyHTML = ()=>{
 
 	return gulp.src(src)
 		.pipe(plumber())
-		.pipe(htmlmin({
-			collapseWhitespace: true,
-			removeComments: true
-		}))
+		.pipe(htmlmin(moduleOpts.htmlmin))
 		.pipe(gulp.dest(dest))
 		.pipe(livereload());
 };
@@ -42,20 +60,13 @@ exports.minifyHTML = minifyHTML;
 
 // Compile CSS
 const buildCSS = ()=>{
-	let src = "src/htdocs/static/less/styles.less",
+	let src = "src/htdocs/static/scss/styles.scss",
 		dest = "dist/htdocs/static/css";
 
 	return gulp.src(src)
 		.pipe(plumber())
-		.pipe(less().on("error", function(err){
-			util.log(err);
-			this.emit("end");
-		}))
-		.pipe(postcss([
-			autoprefixer({
-				browsers: ["last 2 versions"]
-			}), autorem(), cssnano()
-		]))
+		.pipe(sass().on("error", sass.logError))
+		.pipe(postcss([autoprefixer(moduleOpts.autoprefixer), autorem(), cssnano()]))
 		.pipe(gulp.dest(dest))
 		.pipe(livereload());
 };
@@ -74,8 +85,7 @@ const buildJS = ()=>{
 		.transform(babelify, {
 			presets: ["es2015"],
 			plugins: [["transform-react-jsx", {"pragma": "h"}], ["transform-strict-mode", {"strict": false}]]
-		})
-		.bundle()
+		}).bundle()
 		.pipe(source("scripts.min.js"))
 		.pipe(plumber())
 		.pipe(streamify(uglify()))
@@ -152,14 +162,7 @@ const optimizeImages = ()=>{
 	return gulp.src(src)
 		.pipe(plumber())
 		.pipe(changed(dest))
-		.pipe(imagemin([
-			jpegRecompress({
-				max: 90
-			}),
-			pngQuant({
-				quality: "45-90"
-			})
-		]))
+		.pipe(imagemin([jpegRecompress(moduleOpts.jpegRecompress)]))
 		.pipe(gulp.dest(dest))
 		.pipe(livereload());
 };
@@ -171,11 +174,7 @@ const optimizeFavicons = ()=>{
 	return gulp.src(src)
 		.pipe(plumber())
 		.pipe(changed(dest))
-		.pipe(imagemin([
-			pngQuant({
-				quality: "45-90"
-			})
-		]))
+		.pipe(imagemin())
 		.pipe(gulp.dest(dest))
 		.pipe(livereload());
 }
@@ -208,7 +207,7 @@ exports.build = gulp.series(clean, gulp.parallel(minifyHTML, buildCSS, buildJS, 
 const watch = ()=>{
 	livereload.listen();
 	gulp.watch("src/htdocs/**/*.html", minifyHTML);
-	gulp.watch("src/htdocs/static/less/**/*.less", buildCSS);
+	gulp.watch("src/htdocs/static/scss/**/*.scss", buildCSS);
 	gulp.watch(["src/htdocs/static/js/**/*.js", "!src/htdocs/static/js/sw.js"], buildJS, buildServerComponents);
 	gulp.watch("src/htdocs/static/js/sw.js", buildServiceWorker);
 	gulp.watch("src/server.js", buildServer);

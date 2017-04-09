@@ -73,9 +73,9 @@ app.get("/", (req, res)=>{
 	$("[data-styles]").attr("href", $("[data-styles]").attr("href") + "?v=" + contentHashes.styles);
 	$("[data-scripts]").attr("src", $("[data-scripts]").attr("src") + "?v=" + contentHashes.scripts);
 
-	res.setHeader("Cache-Control", "private,no-cache");
+	res.setHeader("Cache-Control", "private,no-cache,no-store,max-age=0");
 	res.setHeader("Service-Worker-Allowed", "/");
-	res.setHeader("Link", "</css/styles.css?v=" + contentHashes.styles + ">;rel=preload;as=style,<https://www.google-analytics.com>;rel=preconnect");
+	res.setHeader("Link", "</css/styles.css?v=" + contentHashes.styles + ">;rel=preload;as=style,</js/scripts.min.js?v=" + contentHashes.scripts + ">;rel=preload;as=script,<https://www.google-analytics.com>;rel=preconnect");
 	res.send($.html());
 });
 
@@ -86,19 +86,16 @@ app.get("/index.html", (req, res)=>{
 app.get("/country/:countryCode", (req, res)=>{
 	let clean = {};
 
-	if(countryCodeRegEx.test(req.params.countryCode) === true && req.params.countryCode.length === 2){
+	if(countryCodeRegEx.test(req.params.countryCode) === true){
 		clean.countryCode = req.params.countryCode;
 
-		for(let i = 0; i < stats.countries.length; i++){
-			if(stats.countries[i].cc.toLowerCase() === clean.countryCode){
-				var countryData = stats.countries[i];
-				break;
-			}
-		}
+		var countryData = stats.countries.filter((value)=>{
+			return value.cc === clean.countryCode;
+		})[0];
 
 		if(typeof(countryData) !== "undefined"){
 			let $ = cheerio.load(pageMarkup.singleCountry),
-				componentHtml = render(<ul className="country-list"><Country maxAvg={stats.m.a.k} maxPeak={stats.m.p.k} countryData={countryData}/></ul>);
+				componentHtml = render(<ul className="country-list"><Country maxAvg={stats.m.a.k} /*maxPeak={stats.m.p.k}*/ countryData={countryData}/></ul>);
 
 			$("title").text(countryData.c + " | Connectivity Index");
 			$("#single-country-listing").html(componentHtml);
@@ -110,7 +107,7 @@ app.get("/country/:countryCode", (req, res)=>{
 			$("[data-styles]").attr("href", $("[data-styles]").attr("href") + "?v=" + contentHashes.styles);
 			$("[data-scripts]").attr("src", $("[data-scripts]").attr("src") + "?v=" + contentHashes.scripts);
 
-			res.setHeader("Cache-Control", "private,no-cache");
+			res.setHeader("Cache-Control", "private,no-cache,no-store,max-age=0");
 			res.setHeader("Service-Worker-Allowed", "/");
 			res.setHeader("Link", "</css/styles.css?v=" + contentHashes.styles + ">;rel=preload;as=style,<https://www.google-analytics.com>;rel=preconnect");
 			res.send($.html());
