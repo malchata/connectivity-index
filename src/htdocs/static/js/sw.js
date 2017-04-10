@@ -1,6 +1,6 @@
-const cacheVersion = "v8";
-const cacheWhitelist = ["v8"];
-const cssHash = "65cce0e9";
+const cacheVersion = "v9";
+const cacheWhitelist = ["v9"];
+const cssHash = "0ceab81a";
 const jsHash = "754dc8b3";
 const cachedAssets = [
 	"/",
