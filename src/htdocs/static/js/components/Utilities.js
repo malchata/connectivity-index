@@ -1,7 +1,20 @@
 export const blend = (pos)=>{
-	let percentile = pos / 100;
+	let percentile = pos / 100,
+		inverse = 1 - percentile,
+		color1 = 0x499f68,
+		color2 = 0x561d25,
+		r1 = color1 >> 16,
+		g1 = (color1 >> 8) & 0xFF,
+		b1 = color1 & 0xFF,
+		r2 = color2 >> 16,
+		g2 = (color2 >> 8) & 0xFF,
+		b2 = color2 & 0xFF,
+		r3 = Math.ceil((percentile * r1) + (inverse * r2)).toString(16),
+		g3 = Math.ceil((percentile * g1) + (inverse * g2)).toString(16),
+		b3 = Math.ceil((percentile * b1) + (inverse * b2)).toString(16),
+		final = "#" + r3 + g3 + b3;
 
-	return "#" + Math.ceil(percentile * (0x499f68 >> 16) + (1 - percentile) * (0x561d25 >> 16)).toString(16) + Math.ceil(percentile * ((0x499f68 >> 8) & 0xff) + (1 - percentile) * ((0x561d25 >> 8) & 0xff)).toString(16) + Math.ceil(percentile * (0x499f68 & 0xff) + (1 - percentile) * (0x561d25 & 0xff)).toString(16);
+	return final;
 }
 
 export const dataSort = (rows, keyName, order)=>{
