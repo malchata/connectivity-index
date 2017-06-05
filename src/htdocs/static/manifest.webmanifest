@@ -4,7 +4,7 @@
 	"url": "https://cindex.co",
 	"start_url": "/",
 	"display": "standalone",
-	"background_color": "#3f4045",
+	"background_color": "#2d3142",
 	"description": "A searchable index of Akamai's State of the Internet Connectivity Report data.",
 	"dir": "ltr",
 	"lang": "en",

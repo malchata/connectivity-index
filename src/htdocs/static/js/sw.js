@@ -1,7 +1,7 @@
-const cacheVersion = "v9";
-const cacheWhitelist = ["v9"];
-const cssHash = "0ceab81a";
-const jsHash = "754dc8b3";
+const cacheVersion = "v10";
+const cacheWhitelist = ["v10"];
+const cssHash = "50ff0221";
+const jsHash = "e079f224";
 const cachedAssets = [
 	"/",
 	"/css/styles.css?v=" + cssHash,
@@ -19,27 +19,25 @@ self.addEventListener("install", (event)=>{
 self.addEventListener("fetch", (event)=>{
 	let allowedAssets = /(localhost|cindex\.co)/i,
 		deniedAssets = /(google-analytics\.com)/i,
-		networkPreferredAssets = /(sw\.js)$/i;
+		networkPreferredContentTypes = /(text\/html)/i;
 
 	if(allowedAssets.test(event.request.url) === true && deniedAssets.test(event.request.url) === false){
-		if(networkPreferredAssets.test(event.request.url) === true){
-			event.respondWith(
-				fetch(event.request).then((fetchedResponse)=>{
-					let response = fetchedResponse.clone();
+		event.respondWith(
+			caches.match(event.request).then((cachedResponse)=>{
+				if(cachedResponse !== undefined && networkPreferredContentTypes.test(cachedResponse.headers.get("Content-Type")) === true){
+					return fetch(event.request).then((fetchedResponse)=>{
+						let response = fetchedResponse.clone();
 
-					caches.open(cacheVersion).then((cache)=>{
-						cache.put(event.request, response);
+						caches.open(cacheVersion).then((cache)=>{
+							cache.put(event.request, response);
+						});
+
+						return fetchedResponse;
+					}).catch(()=>{
+						return cachedResponse;
 					});
-
-					return fetchedResponse;
-				}).catch(()=>{
-					return caches.match(event.request);
-				})
-			);
-		}
-		else{
-			event.respondWith(
-				caches.match(event.request).then((cachedResponse)=>{
+				}
+				else{
 					return cachedResponse || fetch(event.request).then((fetchedResponse)=>{
 						let response = fetchedResponse.clone();
 
@@ -49,9 +47,9 @@ self.addEventListener("fetch", (event)=>{
 
 						return fetchedResponse;
 					});
-				})
-			);
-		}
+				}
+			})
+		);
 	}
 });
 

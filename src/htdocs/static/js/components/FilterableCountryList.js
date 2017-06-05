@@ -31,7 +31,7 @@ export default class FilterableCountryList extends Component{
 	}
 
 	render(){
-		let placeholderText = "e.g., Sweden",
+		let placeholderText = "e.g., Zambia",
 			rows = [],
 			rawRows = [];
 
@@ -48,7 +48,7 @@ export default class FilterableCountryList extends Component{
 			rawRows = dataSort(rawRows, this.state.sortMethod, this.state.sortOrder);
 
 			for(let i = 0; i < rawRows.length; i++){
-				rows.push(<Country maxAvg={this.props.stats.m.a.k} /*maxPeak={this.props.stats.m.p.k}*/ countryData={rawRows[i]}/>);
+				rows.push(<Country maxAvg={this.props.stats.m.a.k} maxPeak={this.props.stats.m.p.k} countryData={rawRows[i]}/>);
 			}
 		}
 

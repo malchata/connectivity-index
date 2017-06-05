@@ -20,7 +20,7 @@ export default class Filters extends Component{
 						<select id="sort" name="sort" ref={(select)=>this.sortMethodInput = select} onChange={this.handleChange}>
 							<option value="c">country name</option>
 							<option selected value="a">average speed</option>
-							{/*<option value="p">peak speed</option>*/}
+							<option value="p">peak speed</option>
 							<option value="p4">% >4 mbps</option>
 							<option value="p10">% >10 mbps</option>
 							<option value="p15">% >15 mbps</option>

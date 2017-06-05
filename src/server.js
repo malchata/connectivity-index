@@ -75,7 +75,7 @@ app.get("/", (req, res)=>{
 
 	res.setHeader("Cache-Control", "private,no-cache,no-store,max-age=0");
 	res.setHeader("Service-Worker-Allowed", "/");
-	res.setHeader("Link", "</css/styles.css?v=" + contentHashes.styles + ">;rel=preload;as=style,</js/scripts.min.js?v=" + contentHashes.scripts + ">;rel=preload;as=script,<https://www.google-analytics.com>;rel=preconnect");
+	res.setHeader("Link", "</css/styles.css?v=" + contentHashes.styles + ">;rel=preload;as=style,</js/scripts.min.js?v=" + contentHashes.scripts + ">;rel=preload;as=script,<https://www.google-analytics.com>;rel=preconnect;crossorigin");
 	res.send($.html());
 });
 
@@ -109,7 +109,7 @@ app.get("/country/:countryCode", (req, res)=>{
 
 			res.setHeader("Cache-Control", "private,no-cache,no-store,max-age=0");
 			res.setHeader("Service-Worker-Allowed", "/");
-			res.setHeader("Link", "</css/styles.css?v=" + contentHashes.styles + ">;rel=preload;as=style,<https://www.google-analytics.com>;rel=preconnect");
+			res.setHeader("Link", "</css/styles.css?v=" + contentHashes.styles + ">;rel=preload;as=style,<https://www.google-analytics.com>;rel=preconnect;crossorigin");
 			res.send($.html());
 		}
 		else{
