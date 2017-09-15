@@ -6,4 +6,3 @@ apps:
       NODE_ENV: development
       PROD: "prod"
       PORT: 80
-      GA_ID: "UA-89536962-1"
