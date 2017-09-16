@@ -1,0 +1,51 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<title>Connectivity Index</title>
+		<meta name="robots" content="index, follow">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="description" content="A searchable index of Akamai's State of the Internet Connectivity Report data.">
+		<link rel="stylesheet" href="/css/styles.css" data-styles>
+		<link rel="manifest" href="/manifest.webmanifest">
+		<script>document.documentElement.classList.remove("no-js");</script>
+		<link rel="apple-touch-icon-precomposed" sizes="57x57" href="/apple-touch-icon-57x57.png">
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/apple-touch-icon-114x114.png">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144x144.png">
+		<link rel="apple-touch-icon-precomposed" sizes="60x60" href="/apple-touch-icon-60x60.png">
+		<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/apple-touch-icon-120x120.png">
+		<link rel="apple-touch-icon-precomposed" sizes="76x76" href="/apple-touch-icon-76x76.png">
+		<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/apple-touch-icon-152x152.png">
+		<link rel="icon" type="image/png" href="/favicon-196x196.png" sizes="196x196">
+		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+		<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+		<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+		<link rel="icon" type="image/png" href="/favicon-128.png" sizes="128x128">
+		<meta name="application-name" content="Connectivity Index">
+		<meta name="msapplication-TileColor" content="#FFFFFF">
+		<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+		<meta name="msapplication-square70x70logo" content="/mstile-70x70.png">
+		<meta name="msapplication-square150x150logo" content="/mstile-150x150.png">
+		<meta name="msapplication-wide310x150logo" content="/mstile-310x150.png">
+		<meta name="msapplication-square310x310logo" content="/mstile-310x310.png">
+	</head>
+	<body>
+		<h1 class="title"><a class="header-link" href="/">Connectivity Index</a></h1>
+		<h2 class="subtitle">Internet speed around the world <a href="https://content.akamai.com/gl-en-pg9135-q1-soti-connectivity.html" rel="noopener" class="timeframe">Q1 2017</span></h2>
+		<div class="divider">
+			<span class="divider-image"></span>
+		</div>
+		<div id="main"></div>
+		<div id="full-country-list"></div>
+		<footer>
+			<p id="footer-text">Created by <a href="https://jeremywagner.me" target="_blank" rel="noopener">Jeremy</a> (<a href="https://twitter.com/malchata" target="_blank" rel="noopener">@malchata</a>). <a href="https://www.akamai.com/us/en/our-thinking/state-of-the-internet-report/global-state-of-the-internet-connectivity-reports.jsp" target="_blank" rel="noopener">State of the Internet data</a> courtesy of Akamai.</p>
+		</footer>
+		<script>
+			if("serviceWorker" in navigator){
+				navigator.serviceWorker.register("/js/sw.js", {
+					scope: "/"
+				});
+			}
+		</script>
+	</body>
+</html>

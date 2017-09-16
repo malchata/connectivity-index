@@ -4,8 +4,8 @@
   "description": "A searchable index of Akamai's State of the Internet connectivity report data.",
   "main": "http.js",
   "scripts": {
-    "build": "gulp build",
-    "start": "PORT=80 PROD='prod' node dist/server.js"
+    "watch": "npx webpack --config webpack.config.js --hot --watch",
+    "build": "npx webpack --config webpack.config.js --optimize-minimize"
   },
   "repository": {
     "type": "git",
@@ -17,13 +17,22 @@
     "autoprefixer": "^7.1.4",
     "autorem": "^0.1.1",
     "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.16",
     "compression": "^1.7.0",
+    "css-loader": "^0.28.7",
     "cssnano": "^3.10.0",
-    "del": "^3.0.0",
     "express": "^4.15.4",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "html-webpack-plugin": "^2.30.1",
     "imagemin-jpeg-recompress": "^5.1.0",
+    "node-sass": "^4.5.3",
+    "postcss-loader": "^2.0.6",
     "preact": "^8.2.5",
     "preact-render-to-string": "^3.6.3",
+    "sass-loader": "^6.0.6",
     "webpack": "^3.6.0"
   },
   "devDependencies": {}

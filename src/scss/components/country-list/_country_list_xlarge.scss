@@ -1,0 +1,11 @@
+@supports(display: grid){
+	.country-list{
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+.all-country-list{
+	li{
+		width: calc(24% - 16px);
+	}
+}

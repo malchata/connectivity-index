@@ -1,0 +1,12 @@
+@supports(display: grid){
+	.country-list{
+		display: grid;
+		grid-template-columns: minmax(max-content, 100%) 1fr;
+		grid-auto-flow: column;
+		grid-gap: 16px;
+	}
+
+	.country{
+		margin: 0;
+	}
+}
