@@ -14,31 +14,31 @@ fs.readdirSync("node_modules").filter((x)=>{
 	nodeModules[mod] = "commonjs " + mod;
 });
 
-// const nodeTarget = {
-// 	entry: "./src/server.js",
-// 	target: "node",
-// 	externals: nodeModules,
-// 	node: {
-// 		__dirname: false,
-// 		__filename: false
-// 	},
-// 	output: {
-// 		filename: "server.js",
-// 		path: path.resolve(__dirname, "dist"),
-// 	},
-// 	module: {
-// 		rules: [
-// 			{
-// 				test: /\.js$/,
-// 				exclude: exclusions,
-// 				use: "babel-loader"
-// 			}
-// 		]
-// 	},
-// 	plugins: [
-// 		new CleanWebpackPlugin(["./dist/css", "./dist/js", "./dist/*.*"])
-// 	]
-// };
+const nodeTarget = {
+	entry: "./server.js",
+	target: "node",
+	externals: nodeModules,
+	node: {
+		__dirname: false,
+		__filename: false
+	},
+	output: {
+		filename: "server.js",
+		path: path.resolve(__dirname, "dist"),
+	},
+	module: {
+		rules: [
+			{
+				test: /\.js$/,
+				exclude: exclusions,
+				use: "babel-loader"
+			}
+		]
+	},
+	plugins: [
+		new CleanWebpackPlugin("./dist")
+	]
+};
 
 const webTarget = {
 	entry: "./src/index.js",
@@ -78,4 +78,4 @@ const webTarget = {
 	]
 }
 
-module.exports = [/*nodeTarget, */webTarget];
+module.exports = [nodeTarget, webTarget];
